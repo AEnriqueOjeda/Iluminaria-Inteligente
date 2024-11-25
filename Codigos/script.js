@@ -23,11 +23,11 @@ const luminariasData = {
         { id: 'Enf8', longitud: '103° 41.888\' W', latitud: '19° 14.884\' N' }
     ],
     servicios: [
-        { id: 'Ser0', longitud: '103° 41.860\' W', latitud: '19° 14.877\' N' },
         { id: 'Serv1', longitud: '103° 41.935\' W', latitud: '19° 14.965\' N' },
         { id: 'Serv2', longitud: '103° 41.928\' W', latitud: '19° 14.972\' N' },
         { id: 'Serv3', longitud: '103° 41.950\' W', latitud: '19° 14.974\' N' },
-        { id: 'Serv4', longitud: '103° 41.932\' W', latitud: '19° 14.988\' N' }
+        { id: 'Serv4', longitud: '103° 41.932\' W', latitud: '19° 14.988\' N' },
+        { id: 'Ser0', longitud: '103° 41.860\' W', latitud: '19° 14.877\' N' }
     ],
     psicologia: [
         { id: 'Psc1', longitud: '103° 41.857\' W', latitud: '19° 14.899\' N' },
@@ -112,6 +112,7 @@ let markers = {};
 document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('#nav-items a');
     const cardsContainer = document.getElementById('cards-container');
+    const display = document.getElementById('estado-display');
 
     // Inicializar el mapa
     initMap();
@@ -122,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors',
-            maxZoom: 19
+            maxZoom: 40
         }).addTo(map);
 
         // Agregar marcadores iniciales
@@ -188,8 +189,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h2>Luminaria ${luminaria.id}</h2>
                 <p>Longitud: ${luminaria.longitud}</p>
                 <p>Latitud: ${luminaria.latitud}</p>
-                <p class="estado" id="estado-${luminaria.id}">Estado: Por verificar</p>
-                <button class="btn-ver" onclick="verificarEstado('${luminaria.id}')">Ver</button>
+                <div class="card-buttons">
+                   <button class="btn-ver" onclick="centrarEnMapa('${luminaria.id}')">Ver en Mapa</button>
+                <div class="estado-dis">
+                    <p id="estado-display">Estado del LED: Desconocido</p>
+                </div>
+
+                </div>
             `;
             cardsContainer.appendChild(card);
         });
@@ -202,6 +208,25 @@ document.addEventListener('DOMContentLoaded', function() {
             map.setView([lat, lon], 18);
         }
     }
+
+    // Función para obtener el estado del LED
+    function obtenerEstado() {
+        const display = document.getElementById('estado-display'); // Elemento donde se mostrará el estado
+        fetch('http://192.168.45.214/estado')
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Confirmar el contenido recibido desde el Arduino
+                if (display) {
+                    display.textContent = `Estado del LED: ${data}`; // Mostrar el estado en el elemento <p>
+                }
+            })
+            .catch(error => console.error('Error al obtener el estado:', error));
+    }
+
+    // Actualizar el estado cada medio segundo
+    setInterval(obtenerEstado, 500);
+
+
 
     // Event listeners para los enlaces del menú
     navLinks.forEach(link => {
@@ -218,38 +243,13 @@ document.addEventListener('DOMContentLoaded', function() {
     createLuminariaCards('telematica');
 });
 
-// Función para verificar estado (accesible globalmente)
-function verificarEstado(id) {
-    const estadoDisplay = document.getElementById(`estado-${id}`);
+// Función para centrar el mapa en una luminaria específica
+function centrarEnMapa(id) {
     const marker = markers[id];
-
-    if (!estadoDisplay) {
-        console.error('Elemento de estado no encontrado');
-        return;
+    if (marker) {
+        map.setView(marker.getLatLng(), 19);
+        marker.openPopup();
     }
-
-    // Mostrar estado de carga
-    estadoDisplay.textContent = 'Verificando...';
-
-    fetch(`http://192.168.18.214/estado/${id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.text();
-        })
-        .then(data => {
-            estadoDisplay.textContent = `Estado: ${data}`;
-            
-            // Centrar mapa en el marcador y mostestadoDisplay.textContent = `Estado: ${data}`;
-            
-            if (marker) {
-                map.setView(marker.getLatLng(), 19);
-                marker.openPopup();
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            estadoDisplay.textContent = 'Error al obtener estado';
-        });
 }
+
+// Función para consultar el estado de una luminaria

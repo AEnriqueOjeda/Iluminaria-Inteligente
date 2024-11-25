@@ -10,8 +10,7 @@ const int ldr = A0;   // salida fotocelda
 int luzValue = 0;
 // const int luz = 14;
 
-int pirPin = 2;      // Pin donde está conectado el sensor PIR
-int pirState = LOW;  // Estado inicial del PIR
+const int motionPin = 2;  // Pin donde está conectado el sensor PIR
 
 unsigned long previousMillis = 0;  // Almacena el último tiempo en que se ejecutó el código
 const long interval = 2000;        // Intervalo de 5 segundos (5000 milisegundos)
@@ -19,7 +18,7 @@ const long interval = 2000;        // Intervalo de 5 segundos (5000 milisegundos
 ESP8266WebServer server(80);  // Crear el servidor web en el puerto 80
 
 void setup() {
-  pinMode(pirPin, INPUT);  // Configura el pin del sensor como entrada
+  pinMode(motionPin, INPUT);  // Configura el pin del sensor como entrada
   pinMode(led1, OUTPUT);
   Serial.begin(9600);
 
@@ -51,11 +50,12 @@ void setup() {
 }
 
 void loop() {
-  server.handleClient();                  // Procesar solicitudes de los clientes
-  int sensorValue = digitalRead(pirPin);  // Lee el valor del sensor PIR
+  server.handleClient();                        // Procesar solicitudes de los clientes
+  int motionDetected = digitalRead(motionPin);  // Lee el valor del sensor PIR
 
   // Obtener el tiempo actual
   unsigned long currentMillis = millis();
+
 
   // Verificar si han pasado 5 segundos desde la última ejecución
   if (currentMillis - previousMillis >= interval) {
@@ -82,16 +82,26 @@ void loop() {
         Serial.println("Encendido a: 100%.         " + String(luzValue));
         break;
 
-      case 2:
+      case 2:  // Poca luz: LED al 80%
         brightness = 200;
         analogWrite(led1, brightness);
         Serial.println("Encendido a: 80%.         " + String(luzValue));
+        if (motionDetected == HIGH) {
+          brightness = 255;  // Enciende al 100% si hay movimiento
+          Serial.println("Movimiento detectado: Encendido a 100%.         " + String(luzValue));
+        }
+        analogWrite(led1, brightness);
         break;
 
-      case 1:
+      case 1:  // Algo de luz: LED al 50%
         brightness = 120;
         analogWrite(led1, brightness);
         Serial.println("Encendido a: 50%.         " + String(luzValue));
+        if (motionDetected == HIGH) {
+          brightness = 255;  // Enciende al 100% si hay movimiento
+          Serial.println("Movimiento detectado: Encendido a 100%.         " + String(luzValue));
+        }
+        analogWrite(led1, brightness);
         break;
 
       case 0:
