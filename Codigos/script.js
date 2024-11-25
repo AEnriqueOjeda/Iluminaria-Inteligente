@@ -47,9 +47,9 @@ const luminariasData = {
         { id: 'Cei1', longitud: '103° 41.890\' W', latitud: '19° 14.957\' N' }
     ],
     rectoria: [
-        { id: 'Rect1', longitud: '103° 41.919\' W', latitud: '19° 14.960\' N' },
+         { id: 'Rect1', longitud: '103° 41.919\' W', latitud: '19° 14.960\' N' },
         { id: 'Rect2', longitud: '103° 41.929\' W', latitud: '19° 14.961\' N' },
-        { id: 'Rect3', longitud: '103° 41.037\' W', latitud: '19° 14.953\' N' },
+        // { id: 'Rect3', longitud: '103° 41.037\' W', latitud: '19° 14.953\' N' },
         { id: 'Rect4', longitud: '103° 41.940\' W', latitud: '19° 14.924\' N' },
         { id: 'Rect5', longitud: '103° 41.915\' W', latitud: '19° 14.938\' N' }
     ],
@@ -87,7 +87,7 @@ const luminariasData = {
         { id: 'Doc3', longitud: '103° 42.039\' W', latitud: '19° 14.934\' N' }
     ],
     mercadotecnia: [
-        { id: 'Merc1', longitud: '103° 42', latitud: '19° 14' },
+         { id: 'Merc1', longitud: '103° 42.013\' W', latitud: '19° 14.957\' N' },
         { id: 'Merc2', longitud: '103° 42.016\' W', latitud: '19° 14.975\' N' },
         { id: 'Merc4', longitud: '103° 41.999\' W', latitud: '19° 14.988\' N' }
     ],
