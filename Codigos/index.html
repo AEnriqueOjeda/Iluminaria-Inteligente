@@ -3,58 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Iluminarias</title>
+    <meta name="description" content="Sistema de Control de Luminarias">
+    <meta name="theme-color" content="#64B32E">
+    <title>Control de Luminarias</title>
+    
+    <!-- Favicon (opcional) -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <nav class="navbar">
+            <div class="nav-header">
+                <h1>Control de Luminarias</h1>
+            </div>
             <ul id="nav-items">
                 <li><a href="#" data-faculty="telematica">Telemática</a></li>
-                <li><a href="#" data-faculty="telematica">Psicología</a></li>
-                <li><a href="#" data-faculty="telematica">Medicina</a></li>
-                <li><a href="#" data-faculty="telematica">Letras y Comunicación</a></li>
-                <li><a href="#" data-faculty="telematica">Servicios 1</a></li>
+                <li><a href="#" data-faculty="medicina">Medicina</a></li>
+                <li><a href="#" data-faculty="enfermeria">Enfermería</a></li>
+                <li><a href="#" data-faculty="servicios">Servicios</a></li>
+                <li><a href="#" data-faculty="psicologia">Psicología</a></li>
+                <li><a href="#" data-faculty="letras">Letras</a></li>
+                <li><a href="#" data-faculty="posgrado">Posgrado</a></li>
+                <li><a href="#" data-faculty="estacionamiento">Estacionamiento</a></li>
+                <li><a href="#" data-faculty="cei">CEI</a></li>
+                <li><a href="#" data-faculty="rectoria">Rectoría</a></li>
+                <li><a href="#" data-faculty="cenedic">CENEDIC</a></li>
+                <li><a href="#" data-faculty="relacionesInt">Relaciones Internacionales</a></li>
+                <li><a href="#" data-faculty="entradaSantiago">Entrada Santiago</a></li>
+                <li><a href="#" data-faculty="delegacionCol">Delegación Col</a></li>
+                <li><a href="#" data-faculty="mediosDidacticos">Medios Didácticos</a></li>
+                <li><a href="#" data-faculty="contabilidad">Contabilidad</a></li>
+                <li><a href="#" data-faculty="documentacion">Documentación</a></li>
+                <li><a href="#" data-faculty="mercadotecnia">Mercadotecnia</a></li>
+                <li><a href="#" data-faculty="bachillerato">Bachillerato</a></li>
+                <li><a href="#" data-faculty="recursosMateriales">Recursos Materiales</a></li>
             </ul>
         </nav>
 
         <div class="content">
+            <div id="map"></div>
             <div class="grid-container" id="cards-container">
-                <div class="card telematica">
-                    <h2>Facultad de Telemática</h2>
-                    <p>Id: 1</p> <br>
-                    <p class="estado" id="estado-display">Estado del LED:</p>
-                    <button class="btn-ver" id="ver">Ver</button>
-                </div>
-                <div class="card telematica">
-                    <h2>Facultad de Telemática</h2>
-                    <p>Id: 2</p> <br>
-                    <p class="estado" id="estado-display">Estado del LED:</p>
-                    <button class="btn-ver" id="ver">Ver</button>
-                </div>
-                <div class="card telematica">
-                    <h2>Facultad de Telemática</h2>
-                    <p>Id: 3</p> <br>
-                    <p class="estado" id="estado-display">Estado del LED:</p>
-                    <button class="btn-ver" id="ver">Ver</button>
-                </div>
-                <div class="card telematica">
-                    <h2>Facultad de Telemática</h2>
-                    <p>Id: 4</p> <br>
-                    <p class="estado" id="estado-display">Estado del LED:</p>
-                    <button class="btn-ver" id="ver">Ver</button>
-                </div>
-                <div class="card telematica">
-                    <h2>Facultad de Telemática</h2>
-                    <p>Id: 5</p> <br>
-                    <p class="estado" id="estado-display">Estado del LED:</p>
-                    <button class="btn-ver" id="ver">Ver</button>
-                </div>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
     
+    <!-- Custom JS -->
+    <script src="script.js"></script>
 </body>
 </html>
